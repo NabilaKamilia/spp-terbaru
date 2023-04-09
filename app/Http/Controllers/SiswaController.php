@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SiswaRequest;
+use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\User;
 
 class SiswaController extends Controller
 {
@@ -16,20 +18,21 @@ class SiswaController extends Controller
     
     public function index(Request $request)
     {
-        $items =Siswa::where([
-            ['nama', '!=', null], //ketika form search kosong, maka request akan null. Ambil semua data di database
+        $siswas =Siswa::where([
+            ['nisn', '!=', null], //ketika form search kosong, maka request akan null. Ambil semua data di database
             [function ($query) use ($request) {
                 if (($keyword = $request->keyword)) {
-                    $query->orWhere('nama', 'LIKE', '%' . $keyword . '%')->get(); //ketika form search terisi, request tidak null. Ambil data sesuai keyword
+                    $query->orWhere('nisn', 'LIKE', '%' . $keyword . '%')->get(); //ketika form search terisi, request tidak null. Ambil data sesuai keyword
                 }
             }]
         ])   
         ->orderBy('id', 'asc')->paginate(10);
-        return view('pages.admin.siswa.index', compact('items'))->
+        return view('pages.admin.siswa.index', compact('siswas'))->
         with('i', (request()->input('page', 1) - 1) * 5); 
         
+        $siswa = Siswa::with('kelas')->get();
         $paginate = Siswa::orderBy('id', 'asc')->paginate(3);
-        return view('pages.admin.siswa.index', ['paginate'=>$paginate]);
+        return view('pages.admin.siswa.index', ['siswas' =>$siswa,'paginate'=>$paginate]);
     }
 
     /**
@@ -39,9 +42,12 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        $siswa = Siswa::all();
+      
+        $kelas = Kelas::all();
+        $user = User::whereDoesntHave('siswa')->get();
         return view('pages.admin.siswa.create',[
-            'siswa' => $siswa
+            'kelas' => $kelas,
+            'user' => $user
         ]);
     }
 
@@ -54,9 +60,9 @@ class SiswaController extends Controller
     public function store(SiswaRequest $request)
     {
         $data = $request->all();
-       
+        
         Siswa::create($data);
-
+        
         return redirect()->route('siswa.index');
     }
 

@@ -29,10 +29,6 @@
                     <input type="text" class="form-control" name="NISN" placeholder="NISN" value="{{ $item->NISN }}">
                 </div>
                 <div class="form-group">
-                    <label for="name">Nama</label>
-                    <input type="text" class="form-control" name="nama" placeholder="nama" value="{{ $item->nama }}">
-                </div>
-                <div class="form-group">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
                     <input type="text" class="form-control" name="jenis_kelamin" placeholder="jenis_kelamin" value="{{ $item->jenis_kelamin }}">
                 </div>
@@ -40,11 +36,7 @@
                     <label for="kelas">Kelas</label>
                     <input type="text" class="form-control" name="kelas" placeholder="kelas" value="{{ $item->kelas }}">
                 </div>
-                <div class="form-group">
-                    <label for="tahun_ajaran">Tahun Ajaran</label>
-                    <input type="text" class="form-control" name="tahun_ajaran" placeholder="tahun_ajaran" value="{{ $item->tahun_ajaran }}">
-                </div>
-                <div class="dropdown">
+               <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Status
                     </button>

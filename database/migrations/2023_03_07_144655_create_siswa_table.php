@@ -16,9 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelas_id');
             $table->string('NISN');
-            $table->string('nama');
-            $table->string('jenis_kelamin');
-            $table->string('tahun_ajaran');
+            $table->enum('jenis_kelamin',['Perempuan', 'Laki-Laki']);
             $table->enum('status', ['aktif', 'tidak_aktif'])->default('aktif');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
@@ -29,8 +27,9 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('siswa');
+       
     }
 };

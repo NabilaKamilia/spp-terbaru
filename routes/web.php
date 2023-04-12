@@ -23,25 +23,18 @@ Route::get('/', function () {
 });
 Route::prefix('admin')
     ->middleware(['auth', 'admin'])
-    ->group(function() {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');   
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('kelas', KelasController::class);
         Route::resource('user', UserController::class);
         Route::resource('siswa', SiswaController::class);
-        Route::resource('tarifspp', TarifSppController ::class);
+        Route::resource('tarifspp', TarifSppController::class);
+    });
 
 
-
-
-    });       
-    Route::prefix('kepsek')
+Route::prefix('kepsek')
     ->middleware(['auth', 'kepsek'])
-    ->group(function() {
-        Route::get('/', [DashboardController::class, 'index']) ->name('dashboard');   
-        
-
-
-        
-    });       
-Auth::routes();
-
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard_admin');
+    });
+// Auth::routes();

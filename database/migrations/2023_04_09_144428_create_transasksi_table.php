@@ -8,22 +8,24 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('tarif_spp', function (Blueprint $table) {
+        Schema::create('transasksi', function (Blueprint $table) {
             $table->id();
-            $table->string('bulan');
-            $table->float('nominal');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('tarif_spp');
+        Schema::dropIfExists('transasksi');
     }
 };

@@ -4,7 +4,7 @@
         <div class="row g-2">
             <div class="col-lg-9 col-md-12">
                 <h4 class="text-white mb-4 ">Get In Touch</h4>
-                <h2 class="text-primary mb-6"><img src="../images/kpulogo.png" width="60px" alt="">KPU Kota Batu</h2>
+                <h2 class="text-primary mb-6"><img src="../images/kpulogo.png" width="60px" alt="">MI AL-HUDA</h2>
                 <p class="mb-2 "><i class="fa fa-map-marker-alt me-3"></i>Jl. Sultan Agung No.16, Sisir, Kec. Batu, Kota Batu, Jawa Timur 65314</p>
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>(0341) 511123</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>humas@kpu-kotabatu.go.id</p>

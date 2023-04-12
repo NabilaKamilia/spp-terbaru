@@ -27,29 +27,48 @@
                     <label for="NISN">NISN</label>
                     <input type="text" class="form-control" name="NISN" placeholder="NISN">
                 </div>
+
                 <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" name="nama" placeholder="Nama">
+                    <label>Users</label>
+                    <select class="form-control" id="user_id" name="user_id">
+                        <option selected hidden disabled>-- Pilih User --</option>
+                        @foreach ($user as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('kategori_id')
+                    <small class="text-danger">{{$message}}</small>
+                    @enderror
                 </div>
+
                 <div class="form-group">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
-                    <input type="text" class="form-control" name="jenis_kelamin" placeholder="Jenis Kelamin">
-                </div>
-                <div class="form-group">
-                    <label for="kelas">Kelas</label>
-                    <input type="text" class="form-control" name="kelas" placeholder="Kelas">
-                </div>
-                <div class="form-group">
-                    <label for="tahun_ajaran">Tahun Ajaran</label>
-                    <input type="text" class="form-control" name="tahun_ajaran" placeholder="Tahun Ajaran">
-                </div>
-                <div class="form-group">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example"  id="status" name="status">
-                        <option selected>Status</option>
-                        <option value="1">Aktif</option>
-                        <option value="2">Tidak Aktif</option>
+                    <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                        <option selected hidden disabled>-- Pilih Jenis Kelamin --</option>                       
+                        <option value="Laki-Laki">Laki - Laki</option>
+                        <option value="Perempuan">Perempuan</option>
                     </select>
-                </div>    
+                </div>
+                <div class="form-group">
+                    <label>Kelas</label>
+                    <select class="form-control" id="kelas_id" name="kelas_id">
+                        <option selected hidden disabled>-- Pilih Kelas --</option>
+                        @foreach ($kelas as $item)
+                        <option value="{{$item->id}}">{{$item->kelas}}</option>
+                        @endforeach
+                    </select>
+                    @error('kategori_id')
+                    <small class="text-danger">{{$message}}</small>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <option selected hidden disabled>-- Pilih Status --</option>                       
+                        <option value="status">Aktif</option>
+                        <option value="status">Tidak Aktif</option>
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">
                     Simpan
                 </button>

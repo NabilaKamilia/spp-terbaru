@@ -6,17 +6,17 @@
         </a>  --}}
         <div class="logo_container">
             <div class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
-                <a href="" class="m-0 text-primary md"><img src="../images/LOGO.png" width="170px" alt="">SISDIKLIH: Sistem Informasi Sosialisasi & Pendidikan Pemilih</a></div>
+                <a href="" class="m-0 text-primary md"><img src="../images/LOGO.png" width="170px" alt="">MI AL-HUDA KOTA MALANG</a></div>
         </div>
         <button type="button" class="navbar-toggler me-4 " data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="" class="nav-item nav-link active">Beranda</a>
-                <a href="" class="nav-item nav-link">Form</a>
-                <a href="" class="nav-item nav-link">Tentang</a>
-                <a href="" class="nav-item nav-link">Kontak</a>
+                <a href="" class="nav-item nav-link active"></a>
+                <a href="" class="nav-item nav-link"></a>
+                <a href="" class="nav-item nav-link"></a>
+                <a href="" class="nav-item nav-link"></a>
             </div>
 
             @guest

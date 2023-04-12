@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="Email" placeholder="Email">
+                        <input id="email" type="email" class="form-control" name="email" placeholder="Email">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>

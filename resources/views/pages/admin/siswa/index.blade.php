@@ -30,23 +30,24 @@
                       <tr>
                           <th>ID</th>
                           <th>NISN</th>
+                          <th>Username</th>
                           <th>Nama</th>
                           <th>Jenis Kelamin</th>
                           <th>Kelas</th>
-                          <th>Tahun Ajaran</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
                       </thead>
                       <tbody>
-                      @forelse($items as $item)
+                      @forelse($siswas as $item)
                           <tr>
                               <td>{{ $item->id }}</td>
                               <td>{{ $item->NISN }}</td>
-                              <td>{{ $item->nama }}</td>
+                              <td>{{ $item->User->name }}</td>
+                              <td>{{ $item->User->username }}</td>
                               <td>{{$item->jenis_kelamin}}</td>
-                              <td>{{$item->Tahun_ajaran}}</td>
-                              <td>{{$item->kelas}}</td>
+                              <td>{{$item->kelas->kelas}}</td>
+                              <td>{{$item->status}}</td>
                                                                                
                               <td>
                                   <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info">
@@ -69,7 +70,7 @@
                       @endforelse
                       </tbody>
                   </table>
-                  {{ $items->links() }}
+                  {{ $siswas->links() }}
               </div>
           </div>
       </div>

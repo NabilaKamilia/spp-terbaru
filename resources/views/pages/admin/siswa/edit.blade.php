@@ -36,6 +36,10 @@
                     <label for="kelas">Kelas</label>
                     <input type="text" class="form-control" name="kelas" placeholder="kelas" value="{{ $item->kelas }}">
                 </div>
+                <div class="form-group">
+                    <label for="TahunAjaran">Tahun Ajaran</label>
+                    <input type="text" class="form-control" name="TahunAjaran" placeholder="TahunAjaran" value="{{ $item->TahunAjaran }}">
+                </div>
                <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Status

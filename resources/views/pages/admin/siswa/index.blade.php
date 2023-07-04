@@ -34,6 +34,7 @@
                           <th>Nama</th>
                           <th>Jenis Kelamin</th>
                           <th>Kelas</th>
+                          <th>Tahun Ajaran</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -43,17 +44,18 @@
                           <tr>
                               <td>{{ $item->id }}</td>
                               <td>{{ $item->NISN }}</td>
-                              <td>{{ $item->User->name }}</td>
                               <td>{{ $item->User->username }}</td>
+                              <td>{{ $item->User->name }}</td>                              
                               <td>{{$item->jenis_kelamin}}</td>
                               <td>{{$item->kelas->kelas}}</td>
+                              <td>{{$item->TahunAjaran}}</td>
                               <td>{{$item->status}}</td>
                                                                                
                               <td>
-                                  <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info">
+                                  <a href="{{ route('siswa.edit', $item->id) }}" class="btn btn-info">
                                       <i class="fa fa-pencil-alt"></i>
                                   </a>
-                                  <form action="{{route( 'user.destroy', $item->id) }}" method="post" class="d-inline">
+                                  <form action="{{route( 'siswa.destroy', $item->id) }}" method="post" class="d-inline">
                                       @csrf
                                       @method('delete')
                                       <button class="btn btn-danger">

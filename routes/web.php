@@ -37,4 +37,4 @@ Route::prefix('kepsek')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard_admin');
     });
-// Auth::routes();
+Auth::routes();

@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('transasksi', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id');
+            $table->float('mrdfee')->nullable();
+            $table->dateTime('waktu_transaksi');
+            $table->string('kode_pembayaran');
+            $table->enum('status_pembayaran', ['1', '2', '3', '4'])->comment('1=menunggu pembayaran, 2=sudah dibayar, 3=kadaluarsa, 4=batal');
             $table->timestamps();
         });
     }

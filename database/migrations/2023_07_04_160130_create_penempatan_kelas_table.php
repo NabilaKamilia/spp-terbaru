@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payment_method', function (Blueprint $table) {
+        Schema::create('penempatan_kelas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->enum('channel', ['e-wallet', 'bank', 'credit', 'merchant']);
-            $table->float('admin');
-            $table->enum('type', ['presented', 'fixprice']);
+            $table->unsignedBigInteger('kelas_id');
+            $table->string("nisn");
+            $table->string("tahun_ajaran");
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_method');
+        Schema::dropIfExists('penempatan_kelas');
     }
 };

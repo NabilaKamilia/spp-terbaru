@@ -5,34 +5,52 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SiswaRequest;
 use App\Models\Kelas;
+use App\Models\PenempatanKelas;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Traits\Response;
 
 class SiswaController extends Controller
 {
+    use Response;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index(Request $request)
     {
-        $siswas =Siswa::where([
+        $siswas = Siswa::where([
             ['nisn', '!=', null], //ketika form search kosong, maka request akan null. Ambil semua data di database
             [function ($query) use ($request) {
                 if (($keyword = $request->keyword)) {
                     $query->orWhere('nisn', 'LIKE', '%' . $keyword . '%')->get(); //ketika form search terisi, request tidak null. Ambil data sesuai keyword
                 }
             }]
-        ])   
-        ->orderBy('id', 'asc')->paginate(10);
-        return view('pages.admin.siswa.index', compact('siswas'))->
-        with('i', (request()->input('page', 1) - 1) * 5); 
-        
+        ])
+            ->orderBy('nisn', 'asc')->paginate(10);
+        return view('pages.admin.siswa.index', compact('siswas'))->with('i', (request()->input('page', 1) - 1) * 5);
+
         $siswa = Siswa::with('kelas')->get();
-        $paginate = Siswa::orderBy('id', 'asc')->paginate(3);
-        return view('pages.admin.siswa.index', ['siswas' =>$siswa,'paginate'=>$paginate]);
+        $paginate = Siswa::orderBy('nisn', 'asc')->paginate(3);
+        return view('pages.admin.siswa.index', ['siswas' => $siswa, 'paginate' => $paginate]);
+    }
+
+    public function indexApi(Request $request)
+    {
+        # code...
+        $siswas = Siswa::with('user')->get();
+
+        return $this->success($siswas, "");
+    }
+
+    public function showApi($id)
+    {
+        # code...
+        $siswas = Siswa::with('user', 'penempatan.kelas')->where('nisn', $id)->first();
+
+        return $this->success($siswas, "");
     }
 
     /**
@@ -42,10 +60,10 @@ class SiswaController extends Controller
      */
     public function create()
     {
-      
+
         $kelas = Kelas::all();
         $user = User::whereDoesntHave('siswa')->get();
-        return view('pages.admin.siswa.create',[
+        return view('pages.admin.siswa.create', [
             'kelas' => $kelas,
             'user' => $user
         ]);
@@ -60,9 +78,9 @@ class SiswaController extends Controller
     public function store(SiswaRequest $request)
     {
         $data = $request->all();
-        
+
         Siswa::create($data);
-        
+
         return redirect()->route('siswa.index');
     }
 
@@ -85,10 +103,19 @@ class SiswaController extends Controller
      */
     public function edit($id)
     {
-        $item = Siswa::all()->find($id);      
+        $item = Siswa::find($id);
+        $penempatan = PenempatanKelas::where('nisn', $item->nisn)->first();
 
-        return view('pages.admin.siswa.edit',[
-            'item' => $item
+        $kelas = Kelas::find($penempatan->kelas_id);
+
+        $item["kelas"] = $kelas->kelas;
+        $item["kelas_id"] = $kelas->id;
+
+        $class = Kelas::all();
+        // dd($item->nisn);
+        return view('pages.admin.siswa.edit', [
+            'item' => $item,
+            'kelas' => $class
         ]);
     }
 
@@ -102,10 +129,18 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-       
-        $item = Siswa::all()->find($id);
+        // dd($data);
+
+        $item = Siswa::find($id);
+        $old = PenempatanKelas::where("nisn", $item->nisn)->first();
+        PenempatanKelas::where('nisn', $item->nisn)->update([
+            'kelas_id' => $request->kelas ?? $old->kelas_id,
+            'nisn' => $request->nisn ?? $old->nisn,
+            'tahun_ajaran' => $request->tahun_ajaran ?? $old->tahun_ajaran
+        ]);
 
         $item->update($data);
+
 
         return redirect()->route('siswa.index');
     }

@@ -24,11 +24,10 @@ class SiswaRequest extends FormRequest
     public function rules()
     {
         return [
-            'NISN' => 'required',
+            'nisn' => 'required',
             'jenis_kelamin' => 'required',
-            'kelas_id' => 'required',
             'user_id' => 'required',
-            
+
         ];
     }
 }

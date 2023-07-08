@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\TarifSppRequest;
 use App\Models\TarifSpp;
+use App\Traits\Response;
+use Illuminate\Support\Facades\DB;
 
 class TarifSppController extends Controller
 {
+    use Response;
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +18,7 @@ class TarifSppController extends Controller
      */
     public function index(Request $request)
     {
-        $items = TarifSpp:: where([
+        $items = TarifSpp::where([
             ['bulan', '!=', null], //ketika form search kosong, maka request akan null. Ambil semua data di database
             [function ($query) use ($request) {
                 if (($keyword = $request->keyword)) {
@@ -114,5 +117,30 @@ class TarifSppController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function indexApi()
+    {
+        $items = TarifSpp::all();
+
+        return $this->success($items, 'Data Berhasil Diambil');
+    }
+
+    public function storeApi(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+
+            $test = TarifSpp::create($data);
+
+            DB::commit();
+            return $this->success($test, 'Data Berhasil Disimpan', 201);
+        } catch (\Throwable $th) {
+            //throw $th;
+            // dd($th->getCode());
+            DB::rollBack();
+            return $this->error($th->getMessage());
+        }
     }
 }

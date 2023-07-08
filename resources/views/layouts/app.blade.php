@@ -14,15 +14,16 @@
     @stack('addon-style')
 </head>
 
-<body>    
-    @include('includes.navbar')    
+<body>
+    @include('includes.navbar')
     @yield('content')
-    @include('includes.footer')    
+    @include('includes.footer')
 
     @stack('prepend-script')
     @include('includes.script')
+    @yield('script')
     @stack('addon-script')
-    
+
 </body>
 
 </html>

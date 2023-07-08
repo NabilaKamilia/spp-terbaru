@@ -19,6 +19,12 @@
   </li>
 
   <li class="nav-item">
+    <a class="nav-link" href="{{url('/admin/transaksi')}}">
+      <i class="fas fa-fw fa-coins"></i>
+      <span>Transkasi</span></a>
+  </li>
+
+  <li class="nav-item">
     <a class="nav-link" href="{{ route('user.index') }}">
       <i class="fas fa-fw fa-user"></i>
       <span>Data User</span></a>
@@ -40,6 +46,11 @@
     <a class="nav-link" href="{{ route('tarifspp.index') }}">
     <i class="fas fa-fw fa-id-badge"></i>
       <span>Tarif SPP</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url('/admin/laporan')}}">
+    <i class="fas fa-fw fa-id-badge"></i>
+      <span>Laporan</span></a>
   </li>
 
   <hr class="sidebar-divider">

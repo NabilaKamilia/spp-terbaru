@@ -25,7 +25,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="NISN">NISN</label>
-                    <input type="text" class="form-control" name="NISN" placeholder="NISN">
+                    <input type="text" class="form-control" name="nisn" placeholder="NISN">
                 </div>
 
                 <div class="form-group">
@@ -44,27 +44,16 @@
                 <div class="form-group">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
                     <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
-                        <option selected hidden disabled>-- Pilih Jenis Kelamin --</option>                       
+                        <option selected hidden disabled>-- Pilih Jenis Kelamin --</option>
                         <option value="Laki-Laki">Laki - Laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Kelas</label>
-                    <select class="form-control" id="kelas_id" name="kelas_id">
-                        <option selected hidden disabled>-- Pilih Kelas --</option>
-                        @foreach ($kelas as $item)
-                        <option value="{{$item->id}}">{{$item->kelas}}</option>
-                        @endforeach
-                    </select>
-                    @error('kategori_id')
-                    <small class="text-danger">{{$message}}</small>
-                    @enderror
-                </div>
+
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="status">
-                        <option selected hidden disabled>-- Pilih Status --</option>                       
+                        <option selected hidden disabled>-- Pilih Status --</option>
                         <option value="status">Aktif</option>
                         <option value="status">Tidak Aktif</option>
                     </select>

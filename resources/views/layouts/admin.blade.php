@@ -68,7 +68,7 @@
   </div>
 
   @include('includes.admin.script')
-
+  @yield('script')
 </body>
 
 </html>

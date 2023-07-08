@@ -21,20 +21,30 @@
     @endif
     <div class="card shadow">
         <div class="card-body">
-            <form action="{{ route('siswa.update', $item->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('siswa.update', $item->nisn) }}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="form-group">
                     <label for="NISN">NISN</label>
-                    <input type="text" class="form-control" name="NISN" placeholder="NISN" value="{{ $item->NISN }}">
+                    <input type="text" class="form-control" name="nisn" placeholder="NISN" value="{{ $item->nisn }}">
                 </div>
                 <div class="form-group">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
-                    <input type="text" class="form-control" name="jenis_kelamin" placeholder="jenis_kelamin" value="{{ $item->jenis_kelamin }}">
+                    {{-- <input type="text" class="form-control" name="jenis_kelamin" placeholder="jenis_kelamin" value="{{ $item->jenis_kelamin }}"> --}}
+                    <select name="jenis_kelamin" class="form-control" id="">
+                        <option value="Laki-Laki" {{$item->jenis_kelamin == "Laki-Laki" ? "selected" : ""}}>Laki-Laki</option>
+                        <option value="Perempuan"  {{$item->jenis_kelamin == "Perempuan" ? "selected" : ""}}>Perempuan</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="kelas">Kelas</label>
-                    <input type="text" class="form-control" name="kelas" placeholder="kelas" value="{{ $item->kelas }}">
+                    <select name="kelas" id="kelas" class="form-control">
+
+                        @foreach ($kelas as $cls)
+                        {{-- <input type="text" class="form-control" name="kelas" placeholder="kelas" value="{{ $item->kelas }}"> --}}
+                            <option value="{{$cls->id}}" {{$item->kelas_id == $cls->id}}>{{$cls->kelas}}</option>
+                        @endforeach
+                    </select>
                 </div>
                <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

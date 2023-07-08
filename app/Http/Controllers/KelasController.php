@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\KelasRequest;
 use App\Models\Kelas;
 use App\Repositories\Repository;
+use App\Traits\Response;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelasController extends Controller
 {
+
+    use Response;
     public function index(Request $request)
     {
         // $items = UserData::all();
@@ -18,7 +21,7 @@ class KelasController extends Controller
         //     'items' => $items,
 
         // ]);
-        //fungsi eloquent menampilkan data menggunakan pagination        
+        //fungsi eloquent menampilkan data menggunakan pagination
         $items = Kelas::where([
             ['kelas', '!=', null], //ketika form search kosong, maka request akan null. Ambil semua data di database
             [function ($query) use ($request) {
@@ -34,6 +37,13 @@ class KelasController extends Controller
         return view('pages.admin.kelas.index', ['paginate' => $paginate]);
     }
 
+
+    public function indexApi(Request $request)
+    {
+        $data = Kelas::all();
+
+        return $this->success($data, "");
+    }
 
     /**
      * Show the form for creating a new resource.

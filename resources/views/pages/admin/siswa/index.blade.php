@@ -41,6 +41,8 @@
                           <th>Username</th>
                           <th>Nama</th>
                           <th>Jenis Kelamin</th>
+                          <th>Kelas</th>
+                          <th>Tahun Ajaran</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -51,11 +53,13 @@
                         @endphp
                       @forelse($siswas as $item)
                           <tr>
-                              <td>{{ $no}}</td>
-                              <td>{{ $item->nisn }}</td>
-                              <td>{{ $item->User->name }}</td>
+                              <td>{{ $item->id }}</td>
+                              <td>{{ $item->NISN }}</td>
                               <td>{{ $item->User->username }}</td>
+                              <td>{{ $item->User->name }}</td>
                               <td>{{$item->jenis_kelamin}}</td>
+                              <td>{{$item->kelas->kelas}}</td>
+                              <td>{{$item->TahunAjaran}}</td>
                               <td>{{$item->status}}</td>
 
                               <td>

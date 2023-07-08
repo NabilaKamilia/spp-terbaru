@@ -53,6 +53,12 @@
       <span>Laporan</span></a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link" href="{{url('/admin/transaksi')}}">
+      <i class="fas fa-fw fa-coins"></i>
+      <span>Transkasi</span></a>
+  </li>
+
   <hr class="sidebar-divider">
 
   <!-- Sidebar Toggler (Sidebar) -->

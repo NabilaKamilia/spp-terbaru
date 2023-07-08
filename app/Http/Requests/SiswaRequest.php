@@ -26,6 +26,11 @@ class SiswaRequest extends FormRequest
         return [
             'nisn' => 'required',
             'jenis_kelamin' => 'required',
+<<<<<<< HEAD
+=======
+            'TahunAjaran' => 'required',
+            'kelas_id' => 'required',
+>>>>>>> fe494c96cb37f7c923dcd4a479e002d0f077d1c7
             'user_id' => 'required',
 
         ];

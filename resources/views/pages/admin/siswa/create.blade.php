@@ -51,6 +51,10 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="TahunAjaran">Tahun Ajaran</label>
+                    <input type="text" class="form-control" id="TahunAjaran" name="TahunAjaran" placeholder="Tahun Ajaran">
+                </div>
+                <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="status">
                         <option selected hidden disabled>-- Pilih Status --</option>

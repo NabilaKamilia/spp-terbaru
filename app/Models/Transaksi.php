@@ -12,7 +12,11 @@ class Transaksi extends Model
     protected $table = 'transaksi';
 
     protected $fillable = [
+<<<<<<< HEAD
         'nisn',
+=======
+        'user_id',
+>>>>>>> fe494c96cb37f7c923dcd4a479e002d0f077d1c7
         'tarif_spp_id',
         'order_id',
         'mdrfee',
@@ -29,7 +33,11 @@ class Transaksi extends Model
      */
     public function user()
     {
+<<<<<<< HEAD
         return $this->hasOne(Siswa::class, 'nisn', 'nisn');
+=======
+        return $this->hasOne(User::class, 'id', 'user_id');
+>>>>>>> fe494c96cb37f7c923dcd4a479e002d0f077d1c7
     }
 
     /**

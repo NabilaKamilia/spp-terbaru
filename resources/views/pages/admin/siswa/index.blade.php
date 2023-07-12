@@ -41,7 +41,7 @@
                           <th>Username</th>
                           <th>Nama</th>
                           <th>Jenis Kelamin</th>
-                          <th>Kelas</th>
+                          {{-- <th>Kelas</th> --}}
                           <th>Tahun Ajaran</th>
                           <th>Status</th>
                           <th>Action</th>
@@ -53,13 +53,13 @@
                         @endphp
                       @forelse($siswas as $item)
                           <tr>
-                              <td>{{ $item->id }}</td>
-                              <td>{{ $item->NISN }}</td>
+                              <td>{{ $no }}</td>
+                              <td>{{ $item->nisn }}</td>
                               <td>{{ $item->User->username }}</td>
                               <td>{{ $item->User->name }}</td>
                               <td>{{$item->jenis_kelamin}}</td>
-                              <td>{{$item->kelas->kelas}}</td>
-                              <td>{{$item->TahunAjaran}}</td>
+                              {{-- <td>{{$item->kelas->kelas}}</td> --}}
+                              <td>{{$item->penempatan->tahun_ajaran}}</td>
                               <td>{{$item->status}}</td>
 
                               <td>
@@ -214,7 +214,7 @@
                 url : "/api/siswa/" + id,
                 type : "GET",
                 success : function (data) {
-                    // console.log(data);
+                    console.log(data);
                     var res = data.data;
                     $('#siswa-detail').val(res.user.name).attr("disabled",true)
                     $('#kelas-detail').val(res.penempatan.kelas.kelas).attr("disabled",true)

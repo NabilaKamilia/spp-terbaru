@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label for="name">Pengguna</label>
                         {{-- <input type="text" class="form-control" name="name" placeholder="Nama"> --}}
-                        <select name="user_id" class="form-control" id="user"></select>
+                        <select name="nisn" class="form-control" id="user"></select>
                     </div>
                     <div class="form-group">
                         <label for="username">Tagihan</label>
@@ -64,14 +64,14 @@
     })
 
     $.ajax({
-        url : '/api/user',
+        url : '/api/siswa',
         type : 'GET',
 
         success : function(data){
             console.log(data);
             $('#user').empty().prepend('<option value="" disabled selected> -- Pilih User -- </option>')
             $.each(data.data, function(key, value){
-                $('#user').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+                $('#user').append('<option value="'+ value.nisn +'">'+ value.user.name +'</option>');
             });
         }
     })

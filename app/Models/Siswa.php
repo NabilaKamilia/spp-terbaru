@@ -23,11 +23,6 @@ class Siswa extends Model
         'TahunAjaran',
         'kelas_id',
         'user_id',
-<<<<<<< HEAD
-=======
-
-        
->>>>>>> fe494c96cb37f7c923dcd4a479e002d0f077d1c7
     ];
 
 

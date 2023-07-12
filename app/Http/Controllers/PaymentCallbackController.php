@@ -16,7 +16,7 @@ class PaymentCallbackController extends Controller
         if ($callback->isSignatureKeyVerified()) {
             $notification = $callback->getNotification();
             $order = $callback->getOrder();
-
+            dd($notification);
             if ($callback->isSuccess()) {
                 Transaksi::where('id', $order->id)->update([
                     'status_pembayaran' => 2,

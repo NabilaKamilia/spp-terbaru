@@ -59,7 +59,7 @@
                               <td>{{ $item->User->name }}</td>
                               <td>{{$item->jenis_kelamin}}</td>
                               {{-- <td>{{$item->kelas->kelas}}</td> --}}
-                              <td>{{$item->penempatan->tahun_ajaran}}</td>
+                              <td>{{$item->penempatan->tahun_ajaran ?? "-"}}</td>
                               <td>{{$item->status}}</td>
 
                               <td>
@@ -172,7 +172,7 @@
                     var res = data.data;
                     $('#siswa').empty().append("<option disabled selected> -- Pilih siswa -- </option>")
                     res.forEach(el => {
-                        $('#siswa').append(`<option value=${el.NISN}>${el.user.name} </option>`)
+                        $('#siswa').append(`<option value=${el.nisn}>${el.user.name} </option>`)
                     });
                 }
             })

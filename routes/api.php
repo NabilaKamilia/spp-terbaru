@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PenempatanKelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TarifSppController;
@@ -63,6 +64,10 @@ Route::prefix('penempatan-kelas')->group(function () {
     Route::delete('/{id}', [PenempatanKelasController::class, 'destroy']);
 });
 
+Route::prefix("transaksi")->group(function()
+{
+    Route::get('/{id}', [TransaksiController::class, 'show']);
+});
 Route::prefix('transaction')->group(function () {
     Route::get('/{id}', [OrderController::class, 'showSnapToken']);
 });

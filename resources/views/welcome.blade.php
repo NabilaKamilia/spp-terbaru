@@ -869,7 +869,7 @@
     <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="w-100" src="img/mi.png" alt="img" height="5">
+                <img class="w-100" src="{{asset('img/mi.png')}}" alt="img" height="5">
                 <div class="carousel-caption">
                     <div class="container">
                         <div class="row justify-content-center">
@@ -882,7 +882,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="w-100" src="img/mi2.png" alt="img" height="2">
+                <img class="w-100" src="{{asset('img/mi2.png')}}" alt="img" height="2">
                 <div class="carousel-caption">
                     <div class="container">
                         <div class="row justify-content-center">

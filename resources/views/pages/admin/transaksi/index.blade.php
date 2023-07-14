@@ -77,7 +77,9 @@
                                   <td>{{$item->waktu_transaksi}}</td>
                                   <th>{{$item->spp->nominal}}</th>
                                   <th> <span class="badge badge-pills {{$item->status_pembayaran == 1 ? "badge-warning" : ($item->status_pembayaran == 2 ? "badge-success" : "badge-danger") }}">{{$item->status_pembayaran == 1 ? "Menunggu Pembayaran" : ($item->status_pembayaran == 2 ? "Pembayaran Selesai" : "Kedaluarsa" )}}</span></th>
-                                  <th><button class="btn btn-sm btn-primary btn-bayar" data-id={{$item->snap_token}}>Bayar</button>
+                                  <th>
+                                    <button class="btn btn-sm btn-primary btn-bayar" data-id={{$item->snap_token}}>Bayar</button>
+                                    <button class="btn btn-sm btn-info btn-detail" data-id={{$item->id}}><i class="fas fa-eye"></i></button>
                                       <button class="btn btn-sm btn-info btn-tf" data-id={{$item->id}} data-href="https://simulator.sandbox.midtrans.com/bca/va/index">TF</button>
                                   </th>
                               </tr>
@@ -112,6 +114,65 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">Save changes</button>
             </div> --}}
+          </div>
+        </div>
+      </div>
+
+
+    <div class="modal fade" id="modal-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " >
+          <div class="modal-content ">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Detail Pembayaran</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td class="border-0">Kode Bayar</td>
+                            <td class="border-0" id="detail-kode"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Nama</td>
+                            <td class="border-0" id="detail-nama"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">NISN</td>
+                            <td class="border-0" id="detail-nisn"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Kelas</td>
+                            <td class="border-0" id="detail-kelas"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Tahun Ajaran</td>
+                            <td class="border-0" id="detail-tahun-ajaran"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Bulan</td>
+                            <td class="border-0" id="detail-bulan"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Nominal</td>
+                            <td class="border-0" id="detail-nominal"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Status</td>
+                            <td class="border-0" id="detail-status"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Waktu Pembayaran</td>
+                            <td class="border-0" id="detail-bayar"></td>
+                        </tr>
+                    </table>
+                  </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
       </div>
@@ -154,6 +215,28 @@
         // })
         // $('#modal-bayar').modal('show')
     })
+
+    $("body").on('click', '.btn-detail', function () {
+        $("#modal-detail").modal('show')
+        $.ajax({
+            url : "/api/transaksi/"+$(this).data('id'),
+            type : "GET",
+            success : function (data) {
+                console.log(data);
+                var res= data.data;
+                $("#detail-kode").html(res.kode_pembayaran);
+                $("#detail-nama").html(res.user.user.name);
+                $("#detail-nisn").html(res.nisn);
+                $("#detail-kelas").html(res.kelas ?? "-");
+                $("#detail-tahun-ajaran").html(res.tahun_ajaran ?? "-");
+                $("#detail-bulan").html(res.spp.bulan);
+                $("#detail-nominal").html(res.spp.nominal);
+                $("#detail-status").html(res.status_pembayaran == 1 ? "Menunggu Bayar" : (res.status_pembayaran == 2 ? "Sudah Bayar" : "Kedaluarsa"));
+                $("#detail-bayar").html(res.status_pembayaran == 0 ? "-" : res.updated_at);
+            }
+        })
+    })
+
 
 </script>
 @endsection

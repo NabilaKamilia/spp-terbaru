@@ -46,10 +46,10 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="TahunAjaran">Tahun Ajaran</label>
                     <input type="text" class="form-control" name="TahunAjaran" placeholder="TahunAjaran" value="{{ $item->TahunAjaran }}">
-                </div>
+                </div> --}}
                <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Status

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\Response;
 use App\Models\Orders;
 use App\Models\Transaksi;
+use App\Models\Siswa;
+use App\Models\User;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +15,7 @@ use Termwind\Components\Dd;
 
 class TransaksiController extends Controller
 {
+    use Response;
     public function index()
     {
         $data = Transaksi::with('user.user', 'spp')->get();
@@ -43,25 +47,19 @@ class TransaksiController extends Controller
         }
     }
 
-    public function show(Orders $order)
+    public function show($id)
     {
-        $snapToken = $order->snap_token;
-        $user = Auth::user();
-        if (empty($snapToken)) {
-            // Jika snap token masih NULL, buat token snap dan simpan ke database
-
-            $midtrans = new CreateSnapTokenService($order, $user);
-            $snapToken = $midtrans->getSnapToken();
-            $order->snap_token = $snapToken;
-            $order->save();
-        }
+        $data = Transaksi::with('user.user', 'spp')->find($id);
+        // dd($data);
+        return $this->success($data, "");
     }
 
     public function showSnaptoken($id)
     {
         DB::beginTransaction();
         $order = Transaksi::with('user', 'spp')->find($id);
-        $user = Auth::user();
+        $siswa = Siswa::find($order->nisn);
+        $user = User::find($siswa->user_id);
         $snapToken = $order->snap_token;
         if (empty($snapToken)) {
             // Jika snap token masih NULL, buat token snap dan simpan ke database

@@ -39,9 +39,7 @@ Route::prefix('admin')
         Route::resource('user', UserController::class);
         Route::resource('siswa', SiswaController::class);
         Route::resource('tarifspp', TarifSppController::class);
-        Route::get("laporan", function () {
-            return view('pages.admin.laporan.index');
-        });
+        Route::get("laporan", [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
 
         Route::prefix("transaksi")->group(function () {
             # code...
@@ -53,6 +51,12 @@ Route::prefix('admin')
             Route::post("/store", [TransaksiController::class, 'store'])->name('transaksi.store');
         });
     });
+
+
+Route::get("/transaksi/{id}", function()
+{
+    return view('pages.admin.transaksi.mobile-detail');
+});
 
 
 Route::prefix('kepsek')

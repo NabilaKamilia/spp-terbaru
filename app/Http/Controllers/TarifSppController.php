@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Http\Request;
 use App\Http\Requests\TarifSppRequest;
 use App\Models\TarifSpp;
@@ -41,6 +42,7 @@ class TarifSppController extends Controller
     public function create()
     {
         $tarifspp = TarifSpp::all();
+
         return view('pages.admin.tarif_spp.create', [
             'tarifspp' => $tarifspp
         ]);
@@ -54,11 +56,29 @@ class TarifSppController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
 
-        TarifSpp::create($data);
+            $spp = TarifSpp::create($data);
 
-        return redirect()->route('tarifspp.index');
+            $siswa = DB::table('siswa')->get();
+            foreach ($siswa as $key => $value) {
+                $tr = new TransaksiController();
+                $payload= [
+                    "tarif_spp_id" => $spp->id,
+                    "nisn" => $value->nisn,
+                ];
+                $tr->storeTr($payload);
+                // dd($tr);
+            }
+            DB::commit();
+            return redirect()->route('tarifspp.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            //throw $th;
+            return redirect()->route('tarifspp.index');
+        }
     }
 
     /**

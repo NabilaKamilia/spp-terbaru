@@ -66,6 +66,9 @@ Route::prefix('penempatan-kelas')->group(function () {
 
 Route::prefix("transaksi")->group(function()
 {
+    Route::get("/", [TransaksiController::class, 'indexApi']);
+    Route::get("/export", [TransaksiController::class, 'export']);
+    Route::get("/pdf/{id}", [TransaksiController::class, 'exportPDF']);
     Route::get('/{id}', [TransaksiController::class, 'show']);
 });
 Route::prefix('transaction')->group(function () {

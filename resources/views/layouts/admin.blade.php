@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sisdiklih Admin</title>
+  <title>MI AL-HUDA</title>
 
   @include('includes.admin.style')
 

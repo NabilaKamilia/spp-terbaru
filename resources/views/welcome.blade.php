@@ -865,7 +865,7 @@
 </body>
 
 <!-- Carousel Start -->
-<div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
+<div class="container-fluid p-0 fadeIn" >
     <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">

@@ -1,5 +1,5 @@
 <!-- Footer Start -->
-<div class="container-fluid bg-footer text-light footer my-4 mb-0 py-4 wow fadeIn data-wow-delay="0.1s" >
+<div class="container-fluid bg-footer text-light footer my-4 mb-0 py-4  fadeIn" >
     <div class="container">
         <div class="row g-2">
             <div class="col-lg-9 col-md-12">
@@ -26,7 +26,7 @@
                 <a class="btn btn-link" href="">Support</a>
             </div>  --}}
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Follow Us</h4>  
+                <h4 class="text-light mb-4">Follow Us</h4>
                 <div>
                     <a class="col-lg-3 col-md-6" href="https://www.twitter.com/kpubatu"><i class="fab fa-twitter me-3"></i>@kpubatu</a><br>
                     <a class="col-lg-3 col-md-6" href="https://www.facebook.com/officialkpubatu"><i class="fab fa-facebook-f me-3"></i>Komisi Pemilihan Umum Kota Batu</a><br>

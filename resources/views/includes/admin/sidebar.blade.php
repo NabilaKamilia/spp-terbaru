@@ -13,7 +13,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="">
+    <a class="nav-link" href="{{ route('dashboard') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
@@ -32,7 +32,7 @@
 
   <li class="nav-item">
     <a class="nav-link" href="{{ route('kelas.index') }}">
-      <i class="fas fa-fw fa-user"></i>
+    <i class="fas fa-fw fa-sitemap"></i>
       <span>Data Kelas</span></a>
   </li>
 
@@ -44,12 +44,12 @@
 
   <li class="nav-item">
     <a class="nav-link" href="{{ route('tarifspp.index') }}">
-    <i class="fas fa-fw fa-id-badge"></i>
+    <i class="fas fa-fw fa-money-bill"></i>
       <span>Tarif SPP</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{{ url('/admin/laporan')}}">
-    <i class="fas fa-fw fa-id-badge"></i>
+    <i class="fas fa-fw fa-book"></i>
       <span>Laporan</span></a>
   </li>
 

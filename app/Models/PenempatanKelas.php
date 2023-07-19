@@ -26,4 +26,14 @@ class PenempatanKelas extends Model
     {
         return $this->hasOne(Kelas::class, 'id', 'kelas_id');
     }
+
+    /**
+     * Get the siswa associated with the PenempatanKelas
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function siswa()
+    {
+        return $this->hasOne(Siswa::class, 'nisn', 'nisn');
+    }
 }

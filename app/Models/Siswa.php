@@ -22,6 +22,9 @@ class Siswa extends Model
         'jenis_kelamin',
         'kelas_id',
         'user_id',
+        'alamat',
+        'no_hp',
+        'status'
     ];
 
 
@@ -30,9 +33,16 @@ class Siswa extends Model
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
 
+
+
+    /**
+     * Get the user associated with the Siswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     /**

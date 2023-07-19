@@ -21,14 +21,9 @@ class SiswaController extends Controller
 
     public function index(Request $request)
     {
-        $siswas = Siswa::where([
-            ['nisn', '!=', null], //ketika form search kosong, maka request akan null. Ambil semua data di database
-            [function ($query) use ($request) {
-                if (($keyword = $request->keyword)) {
-                    $query->orWhere('nisn', 'LIKE', '%' . $keyword . '%')->get(); //ketika form search terisi, request tidak null. Ambil data sesuai keyword
-                }
-            }]
-        ])
+        $siswas = Siswa::whereHas('user', function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        })
             ->orderBy('nisn', 'asc')->paginate(10);
         return view('pages.admin.siswa.index', compact('siswas'))->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -136,11 +131,11 @@ class SiswaController extends Controller
         PenempatanKelas::where('nisn', $item->nisn)->update([
             'kelas_id' => $request->kelas ?? $old->kelas_id,
             'nisn' => $request->nisn ?? $old->nisn,
-            'tahun_ajaran' => $request->tahun_ajaran ?? $old->tahun_ajaran
+            'tahun_ajaran' => $request->tahun_ajaran ?? $old->tahun_ajaran,
         ]);
 
         $item->update($data);
-
+        // dd($item);
 
         return redirect()->route('siswa.index');
     }

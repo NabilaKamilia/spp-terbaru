@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Traits\Response;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -58,7 +59,13 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        User::create($data);
+        // User::create($data);
+        User::create([
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
         return redirect()->route('user.index');
     }

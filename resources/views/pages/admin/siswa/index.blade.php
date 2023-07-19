@@ -21,75 +21,78 @@
       </div>
 
       <!-- Content Row -->
-      <div class="row">
-          <div class="card-body">
-              <div class="table-responsive">
-                <form class="float-right form-inline" id="searchForm" method="get" action="{{ route('siswa.index') }}" role="search">
-                    <div class="form-group mb-3 mt-3">
-                        <input type="text" name="keyword" class="form-control" id="Keyword" aria-describedby="Keyword" placeholder="Nama" value="{{request()->query('keyword')}}">
-                    </div>
-                    <button type="submit" class="btn btn-outline-info mx-2">Cari</button>
-                    <a href="{{ route('siswa.index') }}">
-                        <button type="button" class="btn btn-outline-danger">Reset</button>
-                    </a>
-                </form>
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                      <thead>
-                      <tr>
-                          <th>ID</th>
-                          <th>NISN</th>
-                          <th>Username</th>
-                          <th>Nama</th>
-                          <th>Jenis Kelamin</th>
-                          {{-- <th>Kelas</th> --}}
-                          <th>Tahun Ajaran</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                      @forelse($siswas as $item)
-                          <tr>
-                              <td>{{ $no }}</td>
-                              <td>{{ $item->nisn }}</td>
-                              <td>{{ $item->User->username }}</td>
-                              <td>{{ $item->User->name }}</td>
-                              <td>{{$item->jenis_kelamin}}</td>
-                              {{-- <td>{{$item->kelas->kelas}}</td> --}}
-                              <td>{{$item->penempatan->tahun_ajaran ?? "-"}}</td>
-                              <td>{{$item->status}}</td>
+      <div class="row mt-4">
+        <div class="card">
 
-                              <td>
-                                  <a href="{{ route('siswa.edit', $item->nisn) }}" class="btn btn-warning">
-                                      <i class="fa fa-pencil-alt"></i>
-                                  </a>
-                                  <button class="btn btn-info btn-detail-siswa" data-id="{{$item->nisn}}"><i class="fas fa-eye"></i></button>
-                                  <form action="{{route( 'user.destroy', $item->nisn) }}" method="post" class="d-inline">
-                                      @csrf
-                                      @method('delete')
-                                      <button class="btn btn-danger">
-                                          <i class="fa fa-trash"></i>
-                                      </button>
-                                  </form>
-
-                              </td>
-                          </tr>
+            <div class="card-body">
+                <div class="table-responsive">
+                  <form class="float-right form-inline" id="searchForm" method="get" action="{{ route('siswa.index') }}" role="search">
+                      <div class="form-group mb-3 mt-3">
+                          <input type="text" name="keyword" class="form-control" id="Keyword" aria-describedby="Keyword" placeholder="Nama" value="{{request()->query('keyword')}}">
+                      </div>
+                      <button type="submit" class="btn btn-outline-info mx-2">Cari</button>
+                      <a href="{{ route('siswa.index') }}">
+                          <button type="button" class="btn btn-outline-danger">Reset</button>
+                      </a>
+                  </form>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NISN</th>
+                            <th>Username</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            {{-- <th>Kelas</th> --}}
+                            <th>Tahun Ajaran</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                           @php
-                              $no++;
+                              $no = 1;
                           @endphp
-                      @empty
-                          <td colspan="7" class="text-center">
-                              Data Kosong
-                          </td>
-                      @endforelse
-                      </tbody>
-                  </table>
-                  {{ $siswas->links() }}
-              </div>
-          </div>
+                        @forelse($siswas as $item)
+                            <tr>
+                                <td>{{ $no }}</td>
+                                <td>{{ $item->nisn }}</td>
+                                <td>{{ $item->User->username }}</td>
+                                <td>{{ $item->User->name }}</td>
+                                <td>{{$item->jenis_kelamin}}</td>
+                                {{-- <td>{{$item->kelas->kelas}}</td> --}}
+                                <td>{{$item->penempatan->tahun_ajaran ?? "-"}}</td>
+                                <td>{{$item->status}}</td>
+
+                                <td>
+                                    <a href="{{ route('siswa.edit', $item->nisn) }}" class="btn btn-warning">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </a>
+                                    <button class="btn btn-info btn-detail-siswa" data-id="{{$item->nisn}}"><i class="fas fa-eye"></i></button>
+                                    <form action="{{route( 'user.destroy', $item->nisn) }}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            @php
+                                $no++;
+                            @endphp
+                        @empty
+                            <td colspan="7" class="text-center">
+                                Data Kosong
+                            </td>
+                        @endforelse
+                        </tbody>
+                    </table>
+                    {{ $siswas->links() }}
+                </div>
+            </div>
+        </div>
       </div>
     </div>
     <!-- /.container-fluid -->
@@ -130,7 +133,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Penempatan Kelas</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Detail Siswa</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -139,6 +142,14 @@
                 <div class="form-group">
                     <label for="">Siswa</label>
                     <input type="text" class="form-control" id="siswa-detail">
+                </div>
+                <div class="form-group">
+                    <label for="">Alamat</label>
+                    <input type="text" class="form-control" id="alamat-detail">
+                </div>
+                <div class="form-group">
+                    <label for="">No. Telp</label>
+                    <input type="text" class="form-control" id="telp-detail">
                 </div>
                 <div class="form-group">
                     <label for="">Kelas</label>
@@ -218,6 +229,8 @@
                     var res = data.data;
                     $('#siswa-detail').val(res.user.name).attr("disabled",true)
                     $('#kelas-detail').val(res.penempatan.kelas.kelas).attr("disabled",true)
+                    $('#alamat-detail').val(res.alamat).attr("disabled",true)
+                    $('#telp-detail').val(res.no_hp).attr("disabled",true)
                     $('#tahun_ajaran-detail').val(res.penempatan.tahun_ajaran).attr("disabled",true)
                 }
             })

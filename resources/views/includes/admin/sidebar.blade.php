@@ -12,8 +12,11 @@
   <hr class="sidebar-divider my-0">
 
   <!-- Nav Item - Dashboard -->
+
+  @if (auth()->user()->roles == 'adm')
+
   <li class="nav-item">
-    <a class="nav-link" href="{{ route('dashboard') }}">
+    <a class="nav-link" href="{{ url('/admin') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
@@ -52,6 +55,20 @@
     <i class="fas fa-fw fa-book"></i>
       <span>Laporan</span></a>
   </li>
+@endif
+
+@if (Auth::user()->roles == 'kepsek')
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('/kepsek') }}">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+  </li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('/kepsek/laporan')}}">
+    <i class="fas fa-fw fa-book"></i>
+      <span>Laporan</span></a>
+  </li>
+@endif
 
   {{-- <li class="nav-item">
     <a class="nav-link" href="{{url('/admin/transaksi')}}">

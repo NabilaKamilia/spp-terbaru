@@ -50,6 +50,17 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="NIS">Alamat</label>
+                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="alamat">
+                </div>
+                <div class="form-group">
+                    <label for="NIS">No. Telp</label>
+                    <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="0128301">
+                </div>
+
+
+
                 {{-- <div class="form-group">
                     <label for="TahunAjaran">Tahun Ajaran</label>
                     <input type="text" class="form-control" id="TahunAjaran" name="TahunAjaran" placeholder="Tahun Ajaran">
@@ -58,8 +69,8 @@
                     <label for="status">Status</label>
                     <select class="form-control" id="status" name="status">
                         <option selected hidden disabled>-- Pilih Status --</option>
-                        <option value="status">Aktif</option>
-                        <option value="status">Tidak Aktif</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="tidak_aktif">Tidak Aktif</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">

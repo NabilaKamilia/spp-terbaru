@@ -33,17 +33,68 @@ class TransaksiController extends Controller
         return $this->success($data, "");
     }
 
+    public function indexMy()
+    {
+        $login = Auth::user()->id;
+        // dd($login);
+        $siswa = Siswa::where('user_id', $login)->first();
+        if (!$siswa) {
+            # code...
+            return $this->error("Anda tidak memiliki siswa", 400);
+        }
+        $data = Transaksi::with('user.user', 'spp')->where('nisn', $siswa->nisn )->get();
+        // dd($data);
+        return $this->success($data, "");
+    }
+
     public function showApi($id)
     {
         $data = Transaksi::with('user.user', 'spp')->find($id);
         // dd($data);
         return $this->success($data, "");
     }
-    public function laporan()
+    public function laporan(Request $request)
     {
         $data = Transaksi::with('user.user', 'spp')->where('status_pembayaran', 2)->get();
+        $dataRet = [];
+
+        if ($request->keyword != null) {
+            # code...
+            foreach ($data as $key => $value) {
+                # code...
+                if (strpos( strtolower($value->user->user->name), $request->keyword) !== false || strpos(strtolower($value->spp->bulan), $request->keyword) !== false ) {
+                    # code...
+                    array_push($dataRet, $value);
+                }
+            }
+            $data = $dataRet;
+        }
+
+        // dd($data);
+
         // dd($data);
         return view('pages.admin.laporan.index', compact('data'));
+    }
+
+    public function updateStatus($id)
+    {
+        try {
+
+            DB::beginTransaction();
+            $data = Transaksi::find($id);
+
+            $data->update([
+                'status_pembayaran' => 2
+            ]);
+
+            DB::commit();
+            return $this->success($data, "Berhasil mengubah status pembayaran");
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return $this->error($th->getMessage(), "Gagal mengubah status pembayaran");
+        }
     }
 
     public function store(Request $request)
@@ -54,7 +105,7 @@ class TransaksiController extends Controller
             // dd($request->all());
             $request['created_at'] = date('Y-m-d H:i:s');
             $request['updated_at'] = date('Y-m-d H:i:s');
-            $request['kode_pembayaran'] = 'TRX' . date('YmdHis', strtotime('+7 hours'));
+            $request['kode_pembayaran'] = 'TRX' . date('YmdHis', strtotime('+7 hours')) . rand(100, 999);
             $request['waktu_transaksi'] = date('Y-m-d H:i:s', strtotime('+7 hours'));
             $request['status_pembayaran'] = 1;
             $request['tarif_spp_id'] = $request->spp;
@@ -78,7 +129,7 @@ class TransaksiController extends Controller
             // dd($request->all());
             $request['created_at'] = date('Y-m-d H:i:s');
             $request['updated_at'] = date('Y-m-d H:i:s');
-            $request['kode_pembayaran'] = 'TRX' . date('YmdHis', strtotime('+7 hours'));
+            $request['kode_pembayaran'] = 'TRX' . date('YmdHis', strtotime('+7 hours')) . rand(100, 999);
             $request['waktu_transaksi'] = date('Y-m-d H:i:s', strtotime('+7 hours'));
             $request['status_pembayaran'] = 1;
             // dd($request);
@@ -98,7 +149,7 @@ class TransaksiController extends Controller
 
     public function show($id)
     {
-        $data = Transaksi::with('user.user', 'spp')->find($id);
+        $data =  Transaksi::with('penempatan.siswa.user','penempatan.kelas', 'spp')->find($id);
         // dd($data);
         return $this->success($data, "");
     }

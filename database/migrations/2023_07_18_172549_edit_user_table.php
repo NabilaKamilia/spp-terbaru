@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payment_method', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->enum('channel', ['e-wallet', 'bank', 'credit', 'merchant']);
-            $table->float('admin');
-            $table->enum('type', ['presented', 'fixprice']);
-            $table->timestamps();
+        Schema::table('siswa', function (Blueprint $table) {
+            $table->string("no_hp")->nullable()->after("jenis_kelamin");
+            $table->string("alamat")->nullable()->after("jenis_kelamin");
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_method');
+        //
     }
 };

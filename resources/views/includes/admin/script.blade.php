@@ -1,6 +1,6 @@
 <!-- Bootstrap core JavaScript-->
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+<script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
 
 
   {{-- <script src="{{ url('backend/vendor/jquery/jquery.min.js') }}"></script> --}}

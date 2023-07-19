@@ -46,11 +46,20 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="NIS">Alamat</label>
+                    <input type="text" class="form-control" id="alamat" name="alamat" value="{{$item->alamat}}" placeholder="alamat">
+                </div>
+                <div class="form-group">
+                    <label for="NIS">No. Telp</label>
+                    <input type="text" class="form-control" id="no_hp" name="no_hp" value="{{$item->no_hp}}" placeholder="0128301">
+                </div>
                 {{-- <div class="form-group">
                     <label for="TahunAjaran">Tahun Ajaran</label>
                     <input type="text" class="form-control" name="TahunAjaran" placeholder="TahunAjaran" value="{{ $item->TahunAjaran }}">
                 </div> --}}
-               <div class="dropdown">
+               {{-- <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Status
                     </button>
@@ -58,6 +67,13 @@
                         <a class="dropdown-item" href="#">Aktif</a>
                         <a class="dropdown-item" href="#">Tidak Aktif</a>
                     </div>
+                </div> --}}
+                <div class="form-group">
+                    <label for="">Status</label>
+                    <select name="status" class="form-control" id="">
+                        <option value="aktif" {{$item->status == 'aktif' ? "selected" : ""}}>Aktif</option>
+                        <option value="tidak_aktif" {{$item->status == 'tidak_aktif' ? "selected" : ""}}>Tidak Aktif</option>
+                    </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block">

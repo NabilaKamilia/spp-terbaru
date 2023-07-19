@@ -6,7 +6,7 @@
 
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Ubah Data User {{ $item->name}}</h1>
+        <h1 class="h3 mb-0 text-gray-800">Ubah Data Kelas {{ $item->kelas}}</h1>
       </div>
 
       <!-- Content Row -->
@@ -28,7 +28,7 @@
                         <label for="kelas">Nama Kelas</label>
                         <input type="text" class="form-control" name="kelas" placeholder="kelas" value="{{ $item->kelas }}">
                     </div>
-                   
+
                     <button type="submit" class="btn btn-primary btn-block">
                         Ubah
                     </button>

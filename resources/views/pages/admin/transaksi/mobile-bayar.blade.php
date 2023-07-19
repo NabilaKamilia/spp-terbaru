@@ -56,9 +56,9 @@
                             </tr>
                         </table>
 
-                        {{-- <div class="text-right">
+                        <div class="text-right">
                             <button class="btn btn-success" id="btn-bayar" data-id="">Bayar</button>
-                        </div> --}}
+                        </div>
                     </div>
             </div>
         </div>

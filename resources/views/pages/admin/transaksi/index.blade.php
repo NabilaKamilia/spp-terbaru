@@ -16,10 +16,7 @@
             <a href="{{ url('admin/transaksi/create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data Transaksi
             </a>
-            &nbsp;
-            <a href="{{ url('/api/transaksi/export')}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
-                <i class="fas fa-file-excel fa-sm text-white-50"></i> Ekspor Data Transaksi
-            </a>
+
         </div>
       </div>
 
@@ -62,7 +59,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Nama</th>
                           <th>Kode Pembayaran</th>
                           <th>Waktu Transaksi</th>
@@ -86,8 +83,8 @@
                                   <th>
                                     <button class="btn btn-sm btn-primary btn-bayar" data-id={{$item->snap_token}}><i class="fas fa-money-bill"></i></button>
                                     <button class="btn btn-sm btn-info btn-detail" data-id={{$item->id}}><i class="fas fa-eye"></i></button>
-                                    <button class="btn btn-sm btn-warning btn-edit" data-id={{$item->id}}><i class="fas fa-pencil-alt"></i></button>
-                                      <button class="btn btn-sm btn-success btn-tf" data-id={{$item->id}} data-href="https://simulator.sandbox.midtrans.com/bca/va/index"><i class="fas fa-exchange-alt"></i></button>
+                                    <button class="btn btn-sm btn-success btn-konfirm" data-id={{$item->id}}><i class="fas fa-check"></i></button>
+                                      <button class="btn btn-sm btn-warning btn-tf" data-id={{$item->id}} data-href="https://simulator.sandbox.midtrans.com/bca/va/index"><i class="fas fa-exchange-alt"></i></button>
                                       <a class="btn btn-sm btn-danger"  href="{{url("/api/transaksi/pdf/" . $item->id)}}"><i class="fas fa-print"></i></a>
                                   </th>
                               </tr>
@@ -184,10 +181,104 @@
           </div>
         </div>
       </div>
+
+    <div class="modal fade" id="modal-edit-tr" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " >
+          <div class="modal-content ">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Detail Pembayaran</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Kode Bayar</label>
+                        <input type="text" id="kode" class="form-group form-group-sm">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Nama</label>
+                        <input type="text" id="nama" class="form-group form-group-sm">
+                    </div>
+                    <div class="form-group">
+                        <label for="">NISN</label>
+                        <input type="text" id="nisn" name="" id="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Kelas</label>
+                        <input type="text" id="kelas" name="" id="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tahun Ajaran</label>
+                        <input type="text" id="tahun-ajaran" name="" id="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Bulan</label>
+                        <input type="text" id="bulan" name="" id="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Nominal</label>
+                        <input type="text" id="nominal" name="" id="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Status</label>
+                        <select name="" id="" class="form-control">
+
+                        </select>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td class="border-0">Kode Bayar</td>
+                            <td class="border-0" id="detail-kode"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Nama</td>
+                            <td class="border-0" id="detail-nama"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">NISN</td>
+                            <td class="border-0" id="detail-nisn"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Kelas</td>
+                            <td class="border-0" id="detail-kelas"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Tahun Ajaran</td>
+                            <td class="border-0" id="detail-tahun-ajaran"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Bulan</td>
+                            <td class="border-0" id="detail-bulan"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Nominal</td>
+                            <td class="border-0" id="detail-nominal"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Status</td>
+                            <td class="border-0" id="detail-status"></td>
+                        </tr>
+                        <tr>
+                            <td class="border-0">Waktu Pembayaran</td>
+                            <td class="border-0" id="detail-bayar"></td>
+                        </tr>
+                    </table>
+                  </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 @endsection
 
 
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     // const payButton = document.querySelector('#pay-button');
 
@@ -221,6 +312,35 @@
             $('#modal-bayar .modal-body').html('<iframe src="'+$(this).data('href')+'" width="100%" height="100%"></iframe>')
 
     })
+    $("body").on('click', '.btn-konfirm', function () {
+       var id = $(this).data('id');
+       Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda akan mengkonfirmasi pelunasan data ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1CC88A',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Konfirmasi',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/api/transaksi/status/" + id,
+                        type: "PUT",
+                        success: function(res) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Data berhasil dikonfirmasi',
+                            })
+                            // $('#sample_1').DataTable().ajax.reload();
+                            window.location.reload();
+                        }
+                    })
+                }
+            })
+    })
 
     $("body").on('click', '.btn-detail', function () {
         $("#modal-detail").modal('show')
@@ -231,10 +351,10 @@
                 console.log(data);
                 var res= data.data;
                 $("#detail-kode").html(res.kode_pembayaran);
-                $("#detail-nama").html(res.user.user.name);
+                $("#detail-nama").html(res.penempatan.siswa.user.name);
                 $("#detail-nisn").html(res.nisn);
-                $("#detail-kelas").html(res.kelas ?? "-");
-                $("#detail-tahun-ajaran").html(res.tahun_ajaran ?? "-");
+                $("#detail-kelas").html(res.penempatan.kelas.kelas ?? "-");
+                $("#detail-tahun-ajaran").html(res.penempatan.tahun_ajaran ?? "-");
                 $("#detail-bulan").html(res.spp.bulan);
                 $("#detail-nominal").html(res.spp.nominal);
                 $("#detail-status").html(res.status_pembayaran == 1 ? "Menunggu Bayar" : (res.status_pembayaran == 2 ? "Sudah Bayar" : "Kedaluarsa"));

@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use App\Models\TarifSpp;
+use App\Models\Transaksi;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -65,11 +67,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $data =  User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $spp = TarifSpp::all();
+
+        foreach ($spp as $key => $value) {
+            # code...
+            Transaksi::create([
+                "tarif_spp_id" => $value->id,
+                "nisn" => $data->nisn,
+                "waktu_transaksi" =>date('Y-m-d H:i:s', strtotime('+7 hours')),
+                "kode_pembayaran" => 'TRX' . date('YmdHis', strtotime('+7 hours')),
+                "status_pembayaran" => 1,
+                "created_at" => date('Y-m-d H:i:s', strtotime('+7 hours')),
+                "updated_at" => date('Y-m-d H:i:s', strtotime('+7 hours')),
+            ]);
+        }
+
+        return $data;
     }
 }

@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 
 // Route::middleware('jwt')->group(function () {
-Route::get("/my-profile", [AuthController::class, 'me']);
+Route::get("/my-profile", [AuthController::class, 'me'])->middleware('jwt');
 
 
 Route::prefix('spp')->group(function () {
@@ -67,7 +67,9 @@ Route::prefix('penempatan-kelas')->group(function () {
 Route::prefix("transaksi")->group(function()
 {
     Route::get("/", [TransaksiController::class, 'indexApi']);
+    Route::get("/siswa", [TransaksiController::class, 'indexMy'])->middleware('jwt');
     Route::get("/export", [TransaksiController::class, 'export']);
+    Route::put("/status/{id}", [TransaksiController::class, 'updateStatus']);
     Route::get("/pdf/{id}", [TransaksiController::class, 'exportPDF']);
     Route::get('/{id}', [TransaksiController::class, 'show']);
 });

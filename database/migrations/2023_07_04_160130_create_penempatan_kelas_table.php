@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('penempatan_kelas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('kelas_id');
-            $table->string("nisn");
+            $table->unsignedBigInteger("nisn");
             $table->string("tahun_ajaran");
             $table->timestamps();
+
         });
     }
 

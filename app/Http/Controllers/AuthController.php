@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Siswa;
 use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
+        // $credentials = $request->only('email', 'password');
 
         if (!$token = JWTAuth::attempt($credentials)) {
             return $this->error('Unauthorized', 401);
@@ -34,7 +36,8 @@ class AuthController extends Controller
     {
         try {
 
-            $user = User::find(Auth::user()->id);
+            $user = Siswa::with('user')->where('user_id', Auth::user()->id)->first();
+
 
             return $this->success($user, 'User data successfully retrieved');
         } catch (\Exception $e) {

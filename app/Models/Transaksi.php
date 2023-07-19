@@ -32,6 +32,11 @@ class Transaksi extends Model
         return $this->hasOne(Siswa::class, 'nisn', 'nisn');
     }
 
+    public function penempatan()
+    {
+        return $this->hasOne(PenempatanKelas::class, 'nisn', 'nisn');
+    }
+
     /**
      * Get the spp associated with the Transaksi
      *

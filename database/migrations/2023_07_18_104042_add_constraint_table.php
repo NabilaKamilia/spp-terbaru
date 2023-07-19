@@ -14,11 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            $table->unsignedBigInteger("nisn")->nullable()->after("id");
-            $table->unsignedBigInteger("tarif_spp_id")->nullable()->after("id");
-            $table->dropColumn('order_id');
+            $table->foreign('nisn')->references('nisn')->on('siswa');
+            $table->foreign('tarif_spp_id')->references('id')->on('tarif_spp');
         });
 
+        Schema::table('penempatan_kelas', function (Blueprint $table) {
+            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->foreign('nisn')->references('nisn')->on('siswa');
+        });
 
     }
 

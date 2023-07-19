@@ -53,7 +53,15 @@ Route::prefix('admin')
     });
 
 
+
+
+
+
 Route::get("/transaksi/{id}", function()
+{
+    return view('pages.admin.transaksi.mobile-bayar');
+});
+Route::get("/transaksi/riwayat/{id}", function()
 {
     return view('pages.admin.transaksi.mobile-detail');
 });
@@ -63,5 +71,7 @@ Route::prefix('kepsek')
     ->middleware(['auth', 'kepsek'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard_admin');
+        Route::get("laporan", [TransaksiController::class, 'laporan']);
     });
+
 Auth::routes();

@@ -28,6 +28,7 @@ class JWTMiddleware extends BaseMiddleware
 
         try {
             // dd($request);
+            // dd($request);
             $user = JWTAuth::parseToken()->authenticate();
             // $curToken = Cookie::get('admin_cookie') ? 'admin_cookie' : (Cookie::get('dosen_cookie') ? 'dosen_cookie' : 'mahasiswa_cookie');
             // dd($user);

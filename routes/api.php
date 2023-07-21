@@ -48,6 +48,7 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('siswa')->group(function () {
     Route::get('/', [SiswaController::class, 'indexApi']);
+    Route::get('/transaksi', [SiswaController::class, 'indexTransaksiApi']);
     Route::get('/{id}', [SiswaController::class, 'showApi']);
 });
 

@@ -69,13 +69,13 @@
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
                                     <button class="btn btn-info btn-detail-siswa" data-id="{{$item->nisn}}"><i class="fas fa-eye"></i></button>
-                                    <form action="{{route( 'user.destroy', $item->nisn) }}" method="post" class="d-inline">
+                                    {{-- <form action="{{route( 'user.destroy', $item->nisn) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger">
                                             <i class="fa fa-trash"></i>
                                         </button>
-                                    </form>
+                                    </form> --}}
 
                                 </td>
                             </tr>

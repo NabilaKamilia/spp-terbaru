@@ -6,7 +6,7 @@
 
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Tambah Data User</h1>
+        <h1 class="h3 mb-0 text-gray-800">Tambah Transaksi</h1>
       </div>
 
       <!-- Content Row -->
@@ -64,7 +64,7 @@
     })
 
     $.ajax({
-        url : '/api/siswa',
+        url : '/api/siswa/transaksi',
         type : 'GET',
 
         success : function(data){

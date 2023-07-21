@@ -47,12 +47,12 @@
         <div class="card border-0 shadow">
             <div class="card-body">
                 <div class="table-responsive">
-                  <form class="float-right form-inline" id="searchForm" method="get" action="{{ route('user.index') }}" role="search">
+                  <form class="float-right form-inline" id="searchForm" method="get" action="{{ route('transaksi.index') }}" role="search">
                       <div class="form-group mb-3 mt-3">
                           <input type="text" name="keyword" class="form-control" id="Keyword" aria-describedby="Keyword" placeholder="Nama" value="{{request()->query('keyword')}}">
                       </div>
                       <button type="submit" class="btn btn-outline-info mx-2">Cari</button>
-                      <a href="{{ route('user.index') }}">
+                      <a href="{{ route('transaksi.index') }}">
                           <button type="button" class="btn btn-outline-danger">Reset</button>
                       </a>
                   </form>

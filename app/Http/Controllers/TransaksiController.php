@@ -19,9 +19,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class TransaksiController extends Controller
 {
     use Response;
-    public function index()
+    public function index(Request $request)
     {
-        $data = Transaksi::with('user.user', 'spp')->get();
+        $data = Transaksi::with('user.user', 'spp')->
+        whereHas('user.user', function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        })->
+        get();
         // dd($data);
         return view('pages.admin.transaksi.index', compact('data'));
     }

@@ -21,9 +21,10 @@ class SiswaController extends Controller
 
     public function index(Request $request)
     {
+        // dd($request->keyword);
         $siswas = Siswa::whereHas('user', function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->keyword . '%');
-        })
+        })->orWhere('nisn', 'like', '%' . $request->keyword . '%')
             ->orderBy('nisn', 'asc')->paginate(10);
         return view('pages.admin.siswa.index', compact('siswas'))->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -36,6 +37,14 @@ class SiswaController extends Controller
     {
         # code...
         $siswas = Siswa::with('user')->get();
+
+        return $this->success($siswas, "");
+    }
+
+    public function indexTransaksiApi(Request $request)
+    {
+        # code...
+        $siswas = Siswa::with('user')->where('status', 'aktif')->get();
 
         return $this->success($siswas, "");
     }

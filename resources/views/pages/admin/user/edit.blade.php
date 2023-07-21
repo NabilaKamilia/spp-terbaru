@@ -36,11 +36,11 @@
                         <label for="email">Email</label>
                         <input type="text" class="form-control" name="email" placeholder="email" value="{{ $item->email }}">
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" placeholder="password" value="{{ $item->password }}">
-                    </div>
-                                        
+                    </div> --}}
+
                     <button type="submit" class="btn btn-primary btn-block">
                         Ubah
                     </button>

@@ -27,7 +27,7 @@ class TarifSppController extends Controller
                 }
             }]
         ])
-            ->orderBy('id', 'asc')->paginate(10);
+            ->orderBy('id', 'asc')->paginate(12);
         return view('pages.admin.tarif_spp.index', compact('items'))->with('i', (request()->input('page', 1) - 1) * 5);
 
         $paginate = TarifSpp::orderBy('id', 'asc')->paginate(3);
@@ -62,7 +62,7 @@ class TarifSppController extends Controller
 
             $spp = TarifSpp::create($data);
 
-            $siswa = DB::table('siswa')->get();
+            $siswa = DB::table('siswa')->where('status', 'aktif')->get();
             foreach ($siswa as $key => $value) {
                 $tr = new TransaksiController();
                 $payload= [

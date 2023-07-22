@@ -24,8 +24,8 @@ class TransaksiController extends Controller
         $data = Transaksi::with('user.user', 'spp')->
         whereHas('user.user', function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->keyword . '%');
-        })->
-        get();
+        })->orderBy('waktu_transaksi', 'desc')->
+        paginate(10);
         // dd($data);
         return view('pages.admin.transaksi.index', compact('data'));
     }

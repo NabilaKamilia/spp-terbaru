@@ -14,41 +14,43 @@
 
       <!-- Content Row -->
       <div class="row">
-          <div class="card-body">
-              <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                      <thead>
-                      <tr>
-                          <th>No</th>   
-                          <th>Bulan\Tahun</th>
-                          <th>Nominal</th>
-                          <th>Action</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      @forelse($items as $item)
-                          <tr>
-                              <td>{{ $item->id }}</td>
-                              <td>{{ $item->bulan }}</td>
-                              <td>{{ $item->nominal }}</td>
-                              <td>
-                                  <a href="{{ route('tarifspp.edit', $item->id) }}" class="btn btn-info">
-                                      <i class="fa fa-pencil-alt"></i>
-                                  </a>
-                                 
+        <div class="card w-100">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Bulan\Tahun</th>
+                            <th>Nominal</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($items as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->bulan }}</td>
+                                <td>{{ $item->nominal }}</td>
+                                <td>
+                                    <a href="{{ route('tarifspp.edit', $item->id) }}" class="btn btn-info">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </a>
 
-                              </td>
-                          </tr>
-                      @empty
-                          <td colspan="7" class="text-center">
-                              Data Kosong
-                          </td>
-                      @endforelse
-                      </tbody>
-                  </table>
-                  {{ $items->links() }}
-              </div>
-          </div>
+
+                                </td>
+                            </tr>
+                        @empty
+                            <td colspan="7" class="text-center">
+                                Data Kosong
+                            </td>
+                        @endforelse
+                        </tbody>
+                    </table>
+                    {{ $items->links() }}
+                </div>
+            </div>
+        </div>
       </div>
     </div>
     <!-- /.container-fluid -->

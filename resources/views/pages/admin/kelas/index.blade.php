@@ -37,9 +37,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($items as $item)
+                        @forelse($items as $key => $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $items->firstItem() + $key}}</td>
                                 <td>{{ $item->kelas }}</td>
 
                                 <td>
@@ -62,8 +62,9 @@
                             </td>
                         @endforelse
                         </tbody>
-                    </table>
                     {{ $items->links() }}
+
+                    </table>
                 </div>
             </div>
         </div>

@@ -37,9 +37,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($items as $item)
+                            @php
+                                $no = 1;
+                            @endphp
+                        @forelse($items as $key=> $item)
+
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $items->firstItem() + $key}}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->username }}</td>
                                 <td>{{$item->email}}</td>
@@ -48,16 +52,19 @@
                                     <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
-                                    <form action="{{route( 'user.destroy', $item->id) }}" method="post" class="d-inline">
+                                    {{-- <form action="{{route( 'user.destroy', $item->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger">
                                             <i class="fa fa-trash"></i>
                                         </button>
-                                    </form>
+                                    </form> --}}
 
                                 </td>
                             </tr>
+                        @php
+                            $no++;
+                        @endphp
                         @empty
                             <td colspan="7" class="text-center">
                                 Data Kosong

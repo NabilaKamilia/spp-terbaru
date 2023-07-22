@@ -72,9 +72,9 @@
                           @php
                               $no = 1;
                           @endphp
-                          @foreach ($data as $item)
+                          @foreach ($data as $key => $item)
                               <tr>
-                                  <td>{{$no}}</td>
+                                  <td>{{$data->firstItem() + $key}}</td>
                                   <td>{{$item->user->user->name}}</td>
                                   <td>{{$item->kode_pembayaran}}</td>
                                   <td>{{$item->waktu_transaksi}}</td>
@@ -95,6 +95,9 @@
 
                         </tbody>
                     </table>
+                    <div class="float-left">
+                        {{$data->links()}}
+                    </div>
                 </div>
             </div>
         </div>

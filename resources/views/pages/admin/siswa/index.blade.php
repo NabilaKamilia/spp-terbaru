@@ -53,9 +53,9 @@
                           @php
                               $no = 1;
                           @endphp
-                        @forelse($siswas as $item)
+                        @forelse($siswas as $key => $item)
                             <tr>
-                                <td>{{ $no }}</td>
+                                <td>{{ $siswas->firstItem() + $key }}</td>
                                 <td>{{ $item->nisn }}</td>
                                 <td>{{ $item->User->username }}</td>
                                 <td>{{ $item->User->name }}</td>

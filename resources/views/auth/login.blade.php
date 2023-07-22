@@ -62,17 +62,17 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif  --}}
-                            </div>   
+                            </div>
                         </div>
                     </form>
-                    <div class="form-group row mb-0 mt-2">
+                    {{-- <div class="form-group row mb-0 mt-2">
                         <div class="col-md-6 offset-md-4">
                             <p>Tidak memiliki Akun?</p>
                             <a type="submit" class="btn btn-secondary" href="{{ route('register') }}">
                                 {{ __('Register') }}
                             </a>
                         </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -16,14 +16,25 @@ class UserTable extends Seeder
      */
     public function run()
     {
-        User::create(
-            [
-                'name' => 'Admin',
-                'username' => 'admin',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('password'),
-                'roles' => 'adm',
+        $user = [
+                [
+                    'name' => 'Admin',
+                    'username' => 'admin',
+                    'email' => 'admin@gmail.com',
+                    'password' => Hash::make('password'),
+                    'roles' => 'adm',
+                ],[
+                    'name' => 'Kepsek',
+                    'username' => 'kepsek',
+                    'email' => 'kepsek@gmail.com',
+                    'password' => Hash::make('password'),
+                    'roles' => 'kepsek',
             ]
-        );
+            ];
+
+            foreach ($user as $key => $value) {
+                # code...
+                User::create($value);
+            }
     }
 }

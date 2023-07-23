@@ -81,10 +81,10 @@
                                   <th>{{$item->spp->nominal}}</th>
                                   <th> <span class="badge badge-pills {{$item->status_pembayaran == 1 ? "badge-warning" : ($item->status_pembayaran == 2 ? "badge-success" : "badge-danger") }}">{{$item->status_pembayaran == 1 ? "Menunggu Pembayaran" : ($item->status_pembayaran == 2 ? "Pembayaran Selesai" : "Kedaluarsa" )}}</span></th>
                                   <th>
-                                    <button class="btn btn-sm btn-primary btn-bayar" data-id={{$item->snap_token}}><i class="fas fa-money-bill"></i></button>
+                                    {{-- <button class="btn btn-sm btn-primary btn-bayar" data-id={{$item->snap_token}}><i class="fas fa-money-bill"></i></button> --}}
                                     <button class="btn btn-sm btn-info btn-detail" data-id={{$item->id}}><i class="fas fa-eye"></i></button>
                                     <button class="btn btn-sm btn-success btn-konfirm" data-id={{$item->id}}><i class="fas fa-check"></i></button>
-                                      <button class="btn btn-sm btn-warning btn-tf" data-id={{$item->id}} data-href="https://simulator.sandbox.midtrans.com/bca/va/index"><i class="fas fa-exchange-alt"></i></button>
+                                      {{-- <button class="btn btn-sm btn-warning btn-tf" data-id={{$item->id}} data-href="https://simulator.sandbox.midtrans.com/bca/va/index"><i class="fas fa-exchange-alt"></i></button> --}}
                                       <a class="btn btn-sm btn-danger"  href="{{url("/api/transaksi/pdf/" . $item->id)}}"><i class="fas fa-print"></i></a>
                                   </th>
                               </tr>

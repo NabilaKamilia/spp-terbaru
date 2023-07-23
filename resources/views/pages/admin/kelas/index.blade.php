@@ -62,9 +62,9 @@
                             </td>
                         @endforelse
                         </tbody>
-                    {{ $items->links() }}
 
                     </table>
+                    {{ $items->links() }}
                 </div>
             </div>
         </div>

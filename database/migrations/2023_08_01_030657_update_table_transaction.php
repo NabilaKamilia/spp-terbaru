@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            $table->text('snap_token')->nullable();
+            $table->double('nominal', 8,2)->nullable();
         });
     }
 

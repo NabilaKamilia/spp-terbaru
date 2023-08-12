@@ -77,10 +77,11 @@ class RegisterController extends Controller
         $spp = TarifSpp::all();
 
         foreach ($spp as $key => $value) {
-            # code...
+            # code...$request['nominal'] = TarifSpp::find($request->spp)->nominal;
             Transaksi::create([
                 "tarif_spp_id" => $value->id,
                 "nisn" => $data->nisn,
+                "nominal" => $value->nominal,
                 "waktu_transaksi" =>date('Y-m-d H:i:s', strtotime('+7 hours')),
                 "kode_pembayaran" => 'TRX' . date('YmdHis', strtotime('+7 hours')),
                 "status_pembayaran" => 1,

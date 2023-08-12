@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Traits\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -109,9 +111,32 @@ class UserController extends Controller
 
         $item = User::all()->find($id);
 
+        $data["password"] = Hash::make($data["password"]);
         $item->update($data);
 
         return redirect()->route('user.index');
+    }
+
+    public function updateApi(Request $request)
+    {
+        try {
+            //code...
+            DB::beginTransaction();
+            $data = $request->all();
+
+            $user = Auth::user();
+            $item = User::all()->find($user->id);
+
+            $data["password"] = Hash::make($data["password"]);
+            $item->update($data);
+            DB::commit();
+            return $this->success($user, 'User data successfully updated');
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return $this->error($th->getMessage());
+        }
+
     }
 
     /**

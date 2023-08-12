@@ -26,9 +26,17 @@ class PaymentCallbackController extends Controller
             }
 
             if ($callback->isExpire()) {
+                // dd($order);
+                // Transaksi::where('id', $order->id)->update([
+                //     'status_pembayaran' => 3,
+                // ]);
+
                 Transaksi::where('id', $order->id)->update([
                     'status_pembayaran' => 3,
+                    'snap_token' => null,
                 ]);
+
+
                 // Transaksi::where('id', $order->id)->update([
                 //     'payment_status' => 3,
                 // ]);

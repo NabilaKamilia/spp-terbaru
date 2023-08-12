@@ -19,7 +19,8 @@ class Transaksi extends Model
         'waktu_transaksi',
         'kode_pembayaran',
         'status_pembayaran',
-        'snap_token'
+        'snap_token',
+        'nominal'
     ];
 
     /**

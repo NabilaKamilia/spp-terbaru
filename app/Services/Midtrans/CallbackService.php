@@ -62,7 +62,7 @@ class CallbackService extends Midtrans
         $orderId = $this->order->kode_pembayaran;
         $statusCode = $this->notification->status_code;
         // $grossAmount = $this->order->spp->nominal;
-        $grossAmount = strval($this->order->spp->nominal) . ".00";
+        $grossAmount = strval($this->order->nominal) . ".00";
         // $orderId = $this->order->number;
         // $statusCode = $this->notification->status_code;
         // $grossAmount = $this->order->total_price;
@@ -75,6 +75,7 @@ class CallbackService extends Midtrans
 
     protected function _handleNotification()
     {
+        // dd("Test");
         $notification = new Notification();
         $orderNumber = $notification->order_id;
         $order = Transaksi::with('user', 'spp')->where('kode_pembayaran', $orderNumber)->first();

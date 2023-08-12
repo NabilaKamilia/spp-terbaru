@@ -6,6 +6,7 @@ use App\Http\Controllers\TransaksiController;
 use Illuminate\Http\Request;
 use App\Http\Requests\TarifSppRequest;
 use App\Models\TarifSpp;
+use App\Models\Transaksi;
 use App\Traits\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -64,12 +65,22 @@ class TarifSppController extends Controller
 
             $siswa = DB::table('siswa')->where('status', 'aktif')->get();
             foreach ($siswa as $key => $value) {
+                // dd($value);
                 $tr = new TransaksiController();
-                $payload= [
-                    "tarif_spp_id" => $spp->id,
-                    "nisn" => $value->nisn,
-                ];
-                $tr->storeTr($payload);
+                try {
+                    $payload= [
+                        "tarif_spp_id" => $spp->id,
+                        "nisn" => $value->nisn,
+                        "nominal" => floatval(number_format((float)$spp->nominal, 2, '.', '')),
+                    ];
+                    // dd($tr->storeTr($payload));
+                    $tr->storeTr($payload);
+                    //code...
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    DB::rollBack();
+                }
                 // dd($tr);
             }
             DB::commit();
@@ -105,6 +116,8 @@ class TarifSppController extends Controller
         return view('pages.admin.tarif_spp.edit', [
             'item' => $item
         ]);
+
+
     }
 
     /**
@@ -124,6 +137,15 @@ class TarifSppController extends Controller
         $item = TarifSpp::all()->find($id);
 
         $item->update($data);
+
+        $user = Transaksi::where('tarif_spp_id', $id)->where('status_pembayaran', '!=', 2)->get();
+
+        foreach ($user as $key => $value) {
+            $value->update([
+                'nominal' => $data['nominal'],
+                'snap_token' => null,
+            ]);
+        }
 
         return redirect()->route('tarifspp.index');
     }

@@ -60,6 +60,7 @@
                         <thead>
                         <tr>
                             <th>No</th>
+                            <th>NISN</th>
                             <th>Nama</th>
                           <th>Kode Pembayaran</th>
                           <th>Waktu Transaksi</th>
@@ -72,16 +73,21 @@
                           @php
                               $no = 1;
                           @endphp
+
+                          @inject('convert', 'App\Helpers\Convert')
+
                           @foreach ($data as $key => $item)
+
                               <tr>
                                   <td>{{$data->firstItem() + $key}}</td>
+                                  <td>{{$item->user->nisn}}</td>
                                   <td>{{$item->user->user->name}}</td>
                                   <td>{{$item->kode_pembayaran}}</td>
-                                  <td>{{$item->waktu_transaksi}}</td>
-                                  <th>{{$item->spp->nominal}}</th>
+                                  <td>{{$convert->convertDate($item->waktu_transaksi)}}</td>
+                                  <th>{{$item->nominal}}</th>
                                   <th> <span class="badge badge-pills {{$item->status_pembayaran == 1 ? "badge-warning" : ($item->status_pembayaran == 2 ? "badge-success" : "badge-danger") }}">{{$item->status_pembayaran == 1 ? "Menunggu Pembayaran" : ($item->status_pembayaran == 2 ? "Pembayaran Selesai" : "Kedaluarsa" )}}</span></th>
                                   <th>
-                                    {{-- <button class="btn btn-sm btn-primary btn-bayar" data-id={{$item->snap_token}}><i class="fas fa-money-bill"></i></button> --}}
+                                    <button class="btn btn-sm btn-primary btn-bayar" data-id="{{$item->snap_token}}" data-tr="{{$item->id}}"><i class="fas fa-money-bill"></i></button>
                                     <button class="btn btn-sm btn-info btn-detail" data-id={{$item->id}}><i class="fas fa-eye"></i></button>
                                     <button class="btn btn-sm btn-success btn-konfirm" data-id={{$item->id}}><i class="fas fa-check"></i></button>
                                       {{-- <button class="btn btn-sm btn-warning btn-tf" data-id={{$item->id}} data-href="https://simulator.sandbox.midtrans.com/bca/va/index"><i class="fas fa-exchange-alt"></i></button> --}}
@@ -287,27 +293,45 @@
 
     $('body').on('click', '.btn-bayar', function (e) {
         e.preventDefault();
+        console.log($(this).data('id'));
 
-        snap.pay($(this).data('id') , {
-            // Optional
-            onSuccess: function(result) {
-                /* You may add your own js here, this is just example */
-                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                console.log(result)
-            },
-            // Optional
-            onPending: function(result) {
-                /* You may add your own js here, this is just example */
-                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                console.log(result)
-            },
-            // Optional
-            onError: function(result) {
-                /* You may add your own js here, this is just example */
-                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                console.log(result)
-            }
-        });
+        var snapToken = $(this).data('id');
+        var id = $(this).data('tr');
+       console.log(snapToken)
+        if (snapToken == null || snapToken == '') {
+            $.ajax({
+                url : '/api/transaksi/snap/' + id,
+                type : 'GET',
+                success : function (data) {
+                    console.log(data);
+                    snapToken = data;
+                    // window.location.reload();
+
+                }
+            })
+        }
+
+            snap.pay(snapToken , {
+                // Optional
+                onSuccess: function(result) {
+                    /* You may add your own js here, this is just example */
+                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    console.log(result)
+                },
+                // Optional
+                onPending: function(result) {
+                    /* You may add your own js here, this is just example */
+                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    console.log(result)
+                },
+                // Optional
+                onError: function(result) {
+                    /* You may add your own js here, this is just example */
+                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                    console.log(result)
+                }
+            });
+
     })
 
     $('body').on('click', '.btn-tf', function () {
@@ -359,7 +383,7 @@
                 $("#detail-kelas").html(res.penempatan.kelas.kelas ?? "-");
                 $("#detail-tahun-ajaran").html(res.penempatan.tahun_ajaran ?? "-");
                 $("#detail-bulan").html(res.spp.bulan);
-                $("#detail-nominal").html(res.spp.nominal);
+                $("#detail-nominal").html(res.nominal);
                 $("#detail-status").html(res.status_pembayaran == 1 ? "Menunggu Bayar" : (res.status_pembayaran == 2 ? "Sudah Bayar" : "Kedaluarsa"));
                 $("#detail-bayar").html(res.status_pembayaran == 0 ? "-" : res.updated_at);
             }

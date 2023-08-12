@@ -94,7 +94,7 @@
                 $("#detail-kelas").html(res.penempatan.kelas.kelas ?? "-");
                 $("#detail-tahun-ajaran").html(res.penempatan.tahun_ajaran ?? "-");
                 $("#detail-bulan").html(res.spp.bulan);
-                $("#detail-nominal").html(res.spp.nominal);
+                $("#detail-nominal").html(res.nominal);
                 $("#detail-status").html(res.status_pembayaran == 1 ? "Menunggu Bayar" : (res.status_pembayaran == 2 ? "Sudah Bayar" : "Kedaluarsa"));
                 $("#detail-bayar").html(res.status_pembayaran == 0 ? "-" : res.updated_at);
                 // $("#btn-bayar").data('id', res.snap_token).attr("href", res.snap_token);

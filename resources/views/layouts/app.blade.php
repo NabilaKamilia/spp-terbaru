@@ -15,8 +15,11 @@
 </head>
 
 <body>
+
     @include('includes.navbar')
+
     @yield('content')
+    {{-- @inject('convert', 'Convert') --}}
     @include('includes.footer')
 
     @stack('prepend-script')

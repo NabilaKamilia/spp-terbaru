@@ -7,6 +7,7 @@ use App\Models\Orders;
 use App\Models\Transaksi;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Models\TarifSpp;
 use App\Exports\TransaksiExport;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Illuminate\Http\Request;
@@ -24,7 +25,9 @@ class TransaksiController extends Controller
         $data = Transaksi::with('user.user', 'spp')->
         whereHas('user.user', function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->keyword . '%');
-        })->orderBy('waktu_transaksi', 'desc')->
+        })->
+        orWhere('nisn', 'like', '%' . $request->keyword . '%')->
+        orderBy('waktu_transaksi', 'desc')->
         paginate(10);
         // dd($data);
         return view('pages.admin.transaksi.index', compact('data'));
@@ -66,7 +69,7 @@ class TransaksiController extends Controller
             # code...
             foreach ($data as $key => $value) {
                 # code...
-                if (strpos( strtolower($value->user->user->name), $request->keyword) !== false || strpos(strtolower($value->spp->bulan), $request->keyword) !== false ) {
+                if (strpos( strtolower($value->user->user->name), $request->keyword) !== false || strpos(strtolower($value->spp->bulan), $request->keyword) !== false || strpos(strtolower($value->nisn), $request->keyword) !== false ) {
                     # code...
                     array_push($dataRet, $value);
                 }
@@ -113,6 +116,7 @@ class TransaksiController extends Controller
             $request['waktu_transaksi'] = date('Y-m-d H:i:s', strtotime('+7 hours'));
             $request['status_pembayaran'] = 1;
             $request['tarif_spp_id'] = $request->spp;
+            $request['nominal'] = TarifSpp::find($request->spp)->nominal;
             $data = Transaksi::create($request->all());
             self::showSnapToken($data->id);
             DB::commit();
@@ -136,10 +140,12 @@ class TransaksiController extends Controller
             $request['kode_pembayaran'] = 'TRX' . date('YmdHis', strtotime('+7 hours')) . rand(100, 999);
             $request['waktu_transaksi'] = date('Y-m-d H:i:s', strtotime('+7 hours'));
             $request['status_pembayaran'] = 1;
+            // $request['nominal'] = TarifSpp::find($request->spp)->nominal;
             // dd($request);
             // dd($request);
             // dd(Transaksi::create($request));
             $data = Transaksi::create($request);
+            // dd($data);
             self::showSnapToken($data->id);
             DB::commit();
             return $data;
@@ -148,6 +154,21 @@ class TransaksiController extends Controller
             DB::rollBack();
 
             return redirect()->route('transaksi.index')->with('error', 'Transaksi gagal ditambahkan : ' . $th->getMessage());
+        }
+    }
+
+    public function updateSnap(Request $request, $id)
+    {
+        try {
+            $data = Transaksi::find($id);
+            $data->update([
+                'snap_token' => self::showSnapToken($id)
+            ]);
+            return $data;
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $this->error($th->getMessage(), 422);
         }
     }
 
@@ -160,20 +181,31 @@ class TransaksiController extends Controller
 
     public function showSnaptoken($id)
     {
-        DB::beginTransaction();
-        $order = Transaksi::with('user', 'spp')->find($id);
-        $siswa = Siswa::find($order->nisn);
-        $user = User::find($siswa->user_id);
-        $snapToken = $order->snap_token;
-        if (empty($snapToken)) {
-            // Jika snap token masih NULL, buat token snap dan simpan ke database
-            $midtrans = new CreateSnapTokenService($order, $user);
-            $snapToken = $midtrans->getSnapToken();
-            // dd($snapToken);
-            $order->snap_token = $snapToken;
-            $order->save();
+        try {
+            //code...
+            DB::beginTransaction();
+            $order = Transaksi::with('user', 'spp')->find($id);
+            $siswa = Siswa::find($order->nisn);
+            $user = User::find($siswa->user_id);
+            $snapToken = $order->snap_token;
+            // dd($order->nominal);
+            if ($snapToken == null || $order->status_pembayaran == 3 || $order->status_pembayaran == 1) {
+                // Jika snap token masih NULL, buat token snap dan simpan ke database
+                $midtrans = new CreateSnapTokenService($order, $user);
+                $snapToken = $midtrans->getSnapToken();
+                // dd($snapToken);
+                $order->update([
+                    'snap_token' => $snapToken
+                ]);
+            }
+            // dd($order);
+            DB::commit();
+            return $order->snap_token;
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return $this->error($th->getMessage(), 400);
         }
-        DB::commit();
     }
 
     public function export()

@@ -18,11 +18,11 @@ class CreateSnapTokenService extends Midtrans
 
     public function getSnapToken()
     {
-        // dd($this->order->spp->nominal);
+        // dd($this->order);
         $params = [
             'transaction_details' => [
                 'order_id' => $this->order->kode_pembayaran,
-                'gross_amount' => $this->order->spp->nominal,
+                'gross_amount' => $this->order->nominal,
                 // 'order_id' => $this->order->number,
                 // 'gross_amount' => $this->order->total_price,
             ],

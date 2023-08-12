@@ -31,6 +31,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Route::middleware('jwt')->group(function () {
 Route::get("/my-profile", [AuthController::class, 'me'])->middleware('jwt');
+Route::put("/update-profile", [UserController::class, 'updateApi'])->middleware('jwt');
 
 
 Route::prefix('spp')->group(function () {
@@ -73,6 +74,7 @@ Route::prefix("transaksi")->group(function()
     Route::put("/status/{id}", [TransaksiController::class, 'updateStatus']);
     Route::get("/pdf/{id}", [TransaksiController::class, 'exportPDF']);
     Route::get('/{id}', [TransaksiController::class, 'show']);
+    Route::get('/snap/{id}', [TransaksiController::class, 'showSnapToken']);
 });
 Route::prefix('transaction')->group(function () {
     Route::get('/{id}', [OrderController::class, 'showSnapToken']);

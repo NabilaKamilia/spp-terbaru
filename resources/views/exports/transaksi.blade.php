@@ -39,9 +39,10 @@
           @php
               $no = 1;
           @endphp
+          @inject('convert', 'App\Helpers\Convert')
           @foreach ($data as $item)
               <tr>
-                  <td>{{$no}}</td>
+                  <td>{{ strval($no)}}</td>
                   <td>{{$item->user->nisn}}</td>
                   <td>{{$item->user->user->name}}</td>
                     <td>{{$item->user->penempatan->kelas->kelas}}</td>
@@ -50,7 +51,7 @@
                   <th>{{$item->spp->nominal}}</th>
                   <th> <span class="badge badge-pills {{$item->status_pembayaran == 1 ? "badge-warning" : ($item->status_pembayaran == 2 ? "badge-success" : "badge-danger") }}">{{$item->status_pembayaran == 1 ? "Menunggu Pembayaran" : ($item->status_pembayaran == 2 ? "Pembayaran Selesai" : "Kedaluarsa" )}}</span></th>
                   <td>{{$item->kode_pembayaran}}</td>
-                  <td>{{$item->created_at}}</td>
+                  <td>{{$convert->convertDate($item->created_at)}}</td>
 
               </tr>
               @php

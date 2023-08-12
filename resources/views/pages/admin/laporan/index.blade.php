@@ -32,6 +32,7 @@
                         <thead>
                         <tr>
                             <th>No</th>
+                            <th>NISN</th>
                             <th>Nama</th>
                             <th>Bulan</th>
                             <th>Kode Pembayaran</th>
@@ -43,14 +44,16 @@
                         @php
                             $no = 1;
                         @endphp
+                        @inject('convert', 'App\Helpers\Convert')
                         @forelse($data as $item)
                             <tr>
                                 <td>{{ $no }}</td>
+                                <td>{{$item->nisn}}</td>
                                 <td>{{ $item->user->user->name }}</td>
                                 <td>{{ $item->spp->bulan }}</td>
                                 <td>{{ $item->kode_pembayaran }}</td>
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->spp->nominal}}</td>
+                                <td>{{$convert->convertDate($item->created_at)}}</td>
+                                <td>{{$item->nominal}}</td>
                             </tr>
                           @php
                               $no++;

@@ -94,11 +94,16 @@
                 $("#detail-kelas").html(res.penempatan.kelas.kelas ?? "-");
                 $("#detail-tahun-ajaran").html(res.penempatan.tahun_ajaran ?? "-");
                 $("#detail-bulan").html(res.spp.bulan);
-                $("#detail-nominal").html(res.spp.nominal);
+                $("#detail-nominal").html(res.nominal);
                 $("#detail-status").html(res.status_pembayaran == 1 ? "Menunggu Bayar" : (res.status_pembayaran == 2 ? "Sudah Bayar" : "Kedaluarsa"));
                 $("#detail-bayar").html(res.status_pembayaran == 0 ? "-" : res.updated_at);
                 // $("#btn-bayar").data('id', res.snap_token).attr("href", res.snap_token);
-                snapToken = res.snap_token;
+                if (res.status_pembayaran != 3 || res.status_pembayaran != 1) {
+
+                    snapToken = res.snap_token;
+                }else{
+                    snapToken = $("#btn-bayar").data('id', "");
+                }
 
                 },
                 })
@@ -109,7 +114,24 @@
         $('body').on('click', '#btn-bayar', function (e) {
         e.preventDefault();
 
+        // var snapToken = $(this).data('id');
+        // var id = $(this).data('tr');
+       console.log("Token",snapToken)
+        // if (snapToken == null || snapToken == '') {
+            $.ajax({
+                url : '/api/transaksi/snap/' + id,
+                type : 'GET',
+                success : function (data) {
+                    console.log(data);
+                    snapToken = data;
+                    // window.location.reload();
+
+                }
+            })
+        // }
+
         snap.pay(snapToken , {
+
             // Optional
             onSuccess: function(result) {
                 /* You may add your own js here, this is just example */
@@ -127,6 +149,9 @@
                 /* You may add your own js here, this is just example */
                 // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 console.log(result)
+
+
+                window.location.reload();
             }
         });
     })
